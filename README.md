@@ -48,7 +48,19 @@ Une fois dans le controller, on utilise la méthode model.addAttribute("nomDeLaV
 laValeurDeLaVariable); où laValeurDeLaVariable est la valeur trouvée dans le controller via le Model   
 (en général).  
   
-### 
+### ### Job 5
+**Question : Comment Spring permet-il la validation des données du formulaire ?**  
+
+Spring valide les données grâce à @Valid @ModelAttribute, il va utiliser un objet  
+(classe que l'on crée) pour vérifier que les données respectent certaines conditions  
+(comme @NotBlank pour les string et @NotNull pour les nombres par exemple), ces   
+annotations permettent de vérifier les valeurs avant de les appliquer à l'objet, si les   
+conditions ne sont pas respectée, alors .hasError sera déclenché par le binding des   
+données du formulaire et de l'objet, ce qui permet de facilement gérer les erreurs   
+d'entrées utilisateurs sans réécrire la logique toujours utilisées pour les inputs.  
+Erreur ou non, il est simple avec .hasError de renvoyer la vue nécessaire.  
+  
+
   
   
 
