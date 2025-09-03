@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="${message}">Message par défaut</h1>
+<ul>
+    <li th:each="obj : ${objList}" th:text="${obj}">mot par defaut</li>
+</ul>
+<form method="POST" action="/view" th:object="${formData}">
+    <input th:field="*{welcome}" type="text" name="welcome" id="welcome" placeholder="name">
+    <div th:if="${#fields.hasErrors('welcome')}" th:errors="*{welcome}"></div>
+
+
+    <input th:field="*{age}"  type="number" name="age" id="age">
+    <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+    <button type="submit">Appuie sur le bouton</button>
+</form>
+
+<h3 th:text="${welcomeMessage}"></h3>
+
+</body>
+</html>

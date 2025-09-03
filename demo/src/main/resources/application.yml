@@ -10,7 +10,7 @@ spring:
     activate:
       on-profile: dev
 greeting:
-  message: "Hello World test 3 le retour omg DEV"
+  message: "Hello World test  le retour omg je meurs DEV"
   tools: "Hello Tools vous êtes les meilleurs depuis Dev"
 ---
 spring:
