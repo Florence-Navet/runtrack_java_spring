@@ -7,12 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -34,6 +29,26 @@ public class ViewController {
         model.addAttribute("persons", bidule);
         return "view";
     }
+
+    //Test pour connexion
+    @GetMapping("/coco")
+    @ResponseBody
+    public String zoneProtegee() {
+        return "Bienvenue dans la zone coco !";
+    }
+
+    @GetMapping("/admin")
+    @ResponseBody
+    public String adminZone() {
+        return "Bienvenue dans la zone ADMIN !";
+    }
+
+    @GetMapping("/user")
+    @ResponseBody
+    public String userZone() {
+        return "Bienvenue dans la zone user !";
+    }
+
 
     @PostMapping("/view")
     public String handleForm(@Valid @ModelAttribute("formData") FormData formData,
@@ -57,7 +72,7 @@ public class ViewController {
 
         model.addAttribute("welcomeMsg",
                 "Bienvenue, " + formData.getWelcome() + " ! Tu as " + formData.getAge() + " ans.");
-        model.addAttribute("persons", personService.findAll());
+
 
         return "view";
     }
