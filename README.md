@@ -91,7 +91,37 @@ de l'application
 Spring Data JPA réduit le code standard, promeut les meilleures pratiques et améliore   
 la productivité des développeurs en offrant un moyen pratique d'interagir avec les   
 bases de données relationnelles tout en conservant la flexibilité nécessaire pour   
-personnaliser les requêtes et les comportements lorsque cela est nécessaire.
+personnaliser les requêtes et les comportements lorsque cela est nécessaire.  
+
+## Job 05 **Comment pouvez-vous créer et lire des entités avec Spring Data JPA ?**  
+
+Pour créer et lire des entités avec Spring Data JPA, on définit une interface qui étend   
+JpaRepository.  Cela nous donne déjà accès aux méthodes CRUD comme save() pour insérer ou 
+mettre à jour, et findAll() / findById() pour lire. On peut aussi déclarer des méthodes  
+personnalisées, par exemple User findByEmail(String email), que Spring implémente automatiquement.
+Exemple rapide :
+java  
+public interface UserRepository extends JpaRepository<User, Long> {  
+User findByEmail(String email);  
+}  
+Comment la méthode save de Spring Data JPA peut-elle être utilisée à la fois pour la création et la mise à  
+jour ? 
+  
+## Job 06 **Comment la méthode save de Spring Data JPA peut-elle être utilisée à la fois pour la création et la mise à jour ?**  
+La méthode save() de Spring Data JPA fait à la fois création (INSERT) et mise à jour (UPDATE) grâce au    
+comportement de JPA/Hibernate qui se base sur la clé primaire (@Id) de l’entité :
+
+**Si l’entité n’a pas encore d’ID (ou que l’ID n’existe pas en base):**  
+  
+    save() effectue un INSERT → création d’un nouvel enregistrement.  
+  
+**Si l’entité a déjà un ID correspondant à une ligne existante en base:**  
+  
+    save() effectue un UPDATE → la ligne est modifiée avec les nouvelles valeurs.  
+  
+---  
+   
+
   
 
 
