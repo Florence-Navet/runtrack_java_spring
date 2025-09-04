@@ -75,7 +75,26 @@ Cela permet d'avoir d'émuler la phase de production de l'application sans avoir
 modifier la véritable base de données. L'avoir en mémoire permet une plus grande rapidité   
 d'exécution pour les tests  
   
-## 
+## Quelle est l'importance des annotations, telles que @Entity, dans le contexte de JPA ?**  
+Les annotations comme @Entity permet de faire le lien entre le code Java et JPA (Java Persistence API)  
+qui va communiquer avec la base de données.  
+Cela va permettre de facilement mapper entre l'objet et la table et vice versa.  
+Les autres annotations permet de paramètrer les différents éléments qui doivent pouvoir être en lien   
+avec la base de données.  
+@Id permet d'identifier la clé primaire d'une table dans un objet, @GeneratedValue permet de spécifier   
+que la valeur doit être générée automatiquement et pas manuellement.   
+Cela permet de faire du SQL sans faire de requête directement et de se concentrer sur la logique métier  
+de l'application  
+  
+### **Comment Spring Data facilite-t-il la création de requêtes de base de données?**
+
+Spring Data JPA réduit le code standard, promeut les meilleures pratiques et améliore   
+la productivité des développeurs en offrant un moyen pratique d'interagir avec les   
+bases de données relationnelles tout en conservant la flexibilité nécessaire pour   
+personnaliser les requêtes et les comportements lorsque cela est nécessaire.
+  
+
+
   
 
 
