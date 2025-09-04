@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1 th:text="${message}">Message par défaut</h1>
+<ul>
+  <li th:each="obj : ${objList}" th:text="${obj}">mot par defaut</li>
+</ul>
+<form method="POST" action="/view" th:object="${formData}">
+  <input th:field="*{welcome}" type="text" name="welcome" id="welcome" placeholder="name">
+  <div th:if="${#fields.hasErrors('welcome')}" th:errors="*{welcome}"></div>
+
+
+  <input th:field="*{age}"  type="number" name="age" id="age">
+  <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+  <button type="submit">Appuie sur le bouton</button>
+</form>
+
+<h3 th:text="${welcomeMessage}"></h3>
+<h2> Liste des Personnes</h2>
+<ul>
+  <li th:each="person : ${persons}"><span th:text="${person.name}"></span> <span th:text="${person.age}"></span></li>
+</ul>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th><th>Nom</th><th>Âge</th><th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="p : ${persons}">
+    <td th:text="${p.id}">1</td>
+
+    <!-- UPDATE inline -->
+    <td colspan="2" style="padding:0;">
+      <form th:action="@{|/view/${p.id}/update|}" method="post" style="display:grid;grid-template-columns:1fr 110px auto;gap:.4rem;">
+        <input name="name" th:value="${p.name}" required />
+        <input name="age" type="number" min="0" th:value="${p.age}" required />
+        <button type="submit">Mettre à jour</button>
+
+      </form>
+    </td>
+
+    <!-- DELETE -->
+    <td>
+      <form th:action="@{|/view/${p.id}/delete|}" method="post">
+        <button type="submit" onclick="return confirm('Supprimer cette personne ?')">Supprimer</button>
+
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
