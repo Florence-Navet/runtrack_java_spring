@@ -61,7 +61,13 @@ d'entrées utilisateurs sans réécrire la logique toujours utilisées pour les 
 Erreur ou non, il est simple avec .hasError de renvoyer la vue nécessaire.  
   
 
+## **Qu'est-ce que JPA et comment facilite-t-il l'accès aux bases de données ?**  
+
+Spring Data JPA fournit une implémentation de la couche d'accès aux données pour une   
+application Spring. C'est une brique très pratique car elle permet de ne pas réinventer  
+la roue de l'accès aux données à chaque nouvelle application et donc de se concentrer sur  
   
+
   
 
 
