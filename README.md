@@ -120,7 +120,13 @@ comportement de JPA/Hibernate qui se base sur la clé primaire (@Id) de l’enti
     save() effectue un UPDATE → la ligne est modifiée avec les nouvelles valeurs.  
   
 ---  
-   
+
+## Jour 3   
+## **Pourquoi est-il conseillé de séparer la logique métier des contrôleurs ?**  
+
+Séparer la logique métier des contrôleurs permet d’avoir un code plus clair, testable,  réutilisable et conforme aux bonnes pratiques d’architecture.  
+Chaque couche a sa responsabilité : le contrôleur gère les requêtes, le service applique les règles métier.  
+
 
   
 
