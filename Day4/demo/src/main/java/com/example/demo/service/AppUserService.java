@@ -1,3 +1,4 @@
+// src/main/java/com/example/demo/service/AppUserService.java
 package com.example.demo.service;
 
 import com.example.demo.Model.AppUser;
@@ -9,7 +10,6 @@ import java.util.Set;
 
 @Service
 public class AppUserService {
-
     private final AppUserRepository repo;
     private final PasswordEncoder encoder;
 
@@ -19,9 +19,12 @@ public class AppUserService {
     }
 
     public AppUser register(String username, String rawPassword) {
-        AppUser user = new AppUser();
+        if (repo.existsByUsername(username)) {
+            throw new IllegalArgumentException("On te connait déjà, tente pas de recommencer !!");
+        }
+        var user = new AppUser();
         user.setUsername(username);
-        user.setPassword(encoder.encode(rawPassword));
+        user.setPassword(encoder.encode(rawPassword)); // BCrypt !
         user.setRoles(Set.of("ROLE_USER")); // rôle par défaut
         return repo.save(user);
     }
