@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head><meta charset="UTF-8"><title>Admin</title></head>
+<body>
+<h1>Zone Admin</h1>
+<p>Connecté : <span sec:authentication="name"></span></p>
+<p>Rôles : <span sec:authentication="principal.authorities"></span></p>
+</body>
+</html>

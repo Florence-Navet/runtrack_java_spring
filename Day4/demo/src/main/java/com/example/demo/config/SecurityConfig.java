@@ -3,7 +3,9 @@ package com.example.demo.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -12,10 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -28,23 +31,31 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         // pages publiques
                         .requestMatchers("/", "/hello","/login", "/view").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        //creation des deux roles
+                        .requestMatchers(HttpMethod.POST, "/view").hasAnyRole("USER", "ADMIN")
+                        //action reservé à l'admin
+                        .requestMatchers(HttpMethod.POST,"/view/*/update").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/view/*/delete").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         // le reste nécessite une auth
                         .anyRequest().authenticated()
                 )
                 // Form login personnalisé
-                .formLogin(login  -> login
+                .formLogin(form  -> form
                         .loginPage("/login") //GET : page de login
                         .loginProcessingUrl("/login") //POST : action du login
                         .defaultSuccessUrl("/view",  true)// redirection après succès
-                        .failureUrl("/login?error")
+                                .failureUrl("/login?error")
                         .permitAll()//
                         )
-                // Authentification HTTP Basic - pas utiliser en page HTML
-                .httpBasic(httpBasic -> httpBasic.disable())
-                // CSRF : on garde CSRF, mais on l'ignore pour H2-console
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+
+                // H2 console : CSRF ignoré + iframes autorisés
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+                        .ignoringRequestMatchers("/h2-console/**")
                 )
                 // H2 a besoin d'iframes
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()));
