@@ -127,6 +127,12 @@ comportement de JPA/Hibernate qui se base sur la clé primaire (@Id) de l’enti
 Séparer la logique métier des contrôleurs permet d’avoir un code plus clair, testable,  réutilisable et conforme aux bonnes pratiques d’architecture.  
 Chaque couche a sa responsabilité : le contrôleur gère les requêtes, le service applique les règles métier.  
 
+**Comment stocker en toute sécurité les mots de passe des utilisateurs avec Spring Security?**  
+
+Avec Spring Security, on stocke les mots de passe hachés et salés grâce à un PasswordEncoder comme BCryptPasswordEncoder, ou Argon2PasswordEncoder (plus récent, résistant aux attaques GPU/ASIC).  
+Il ne faut pas stocker les mots-de-passes en clair; et mieux vaut eviter les cryptages MD5, SHA-1, ou SHA-256 seuls.    
+On encode au moment de l’inscription et on utilise matches() pour vérifier lors de la connexion, via:    
+passwordEncoder.matches(rawPassword, hashedPassword).  
 
   
 
