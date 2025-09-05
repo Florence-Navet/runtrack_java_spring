@@ -49,6 +49,15 @@ public class ViewController {
         return "Bienvenue dans la zone user !";
     }
 
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "logout", required = false) String logout,
+                            Model model) {
+        if (error != null)  model.addAttribute("errorMsg", "Identifiants invalides.");
+        if (logout != null) model.addAttribute("logoutMsg", "Vous avez été déconnecté.");
+        return "login"; // => templates/login.html
+    }
+
 
     @PostMapping("/view")
     public String handleForm(@Valid @ModelAttribute("formData") FormData formData,
