@@ -127,6 +127,15 @@ comportement de JPA/Hibernate qui se base sur la clé primaire (@Id) de l’enti
 Séparer la logique métier des contrôleurs permet d’avoir un code plus clair, testable,  réutilisable et conforme aux bonnes pratiques d’architecture.  
 Chaque couche a sa responsabilité : le contrôleur gère les requêtes, le service applique les règles métier.  
 
+## **Comment Spring Security gère les rôles et autorisations ?**  
+Spring Security gère les rôles via des autorités (ex: Role_User, Role_Admin) attachées à l'utilisateur au login.  
+Ensuite :  
+. Les règles d'accès(hasRole, hasAnyRole) sont vérifiées dans les filtres HTTP,  
+. dans les méthodes avec @PreAuthorize,  
+. et dans les vues(ex. Thymelead sec:authorize)  
+si l'utilisateur n'a pas le rôle requis , la requête est bloquée (403 ou redirection login). 
+
+
 
   
 
