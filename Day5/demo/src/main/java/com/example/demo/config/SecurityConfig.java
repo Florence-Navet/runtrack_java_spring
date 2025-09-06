@@ -37,6 +37,9 @@ public class SecurityConfig {
                         // pages publiques
                         .requestMatchers("/", "/hello","/login", "/view", "/register").permitAll()
 
+                        //autoriser affichage liste personnes
+                        .requestMatchers(HttpMethod.GET, "/persons").permitAll()
+
                         //creation des deux roles USER ou ADMIN
                         .requestMatchers(HttpMethod.POST, "/view").hasAnyRole("USER", "ADMIN")
 

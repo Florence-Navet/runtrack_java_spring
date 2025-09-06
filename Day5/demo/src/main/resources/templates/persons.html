@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"><title>Personnes</title>
+</head>
+<body>
+<h1>Liste des personnes</h1>
+
+<table border="1" cellpadding="6">
+  <thead>
+  <tr><th>ID</th><th>Nom</th><th>Âge</th></tr>
+  </thead>
+  <tbody>
+  <tr th:each="p : ${persons}">
+    <td th:text="${p.id}">1</td>
+    <td th:text="${p.name}">Alice</td>
+    <td th:text="${p.age}">30</td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(persons)}">
+    <td colspan="3">Aucune personne trouvée.</td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
