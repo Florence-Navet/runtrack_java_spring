@@ -150,7 +150,7 @@ cheat-sheet THymeleat/ Spring Boot
 
 2. Syntaxes-clés
    . Expressions :  
-    . ${...} : variables du Models (model.addAtribute("person", p) ->${person.name})
+   . ${...} : variables du Models (model.addAtribute("person", p) ->${person.name})
    . \*{...} : variables liées à l'objet du formulaire courant (th:objet)
    . #{...}: messages i18n (messages.properties)
    .@{...}: URLs ( @{/login}, @/user/{id}(id=${u.id}))
@@ -168,9 +168,9 @@ cheat-sheet THymeleat/ Spring Boot
 
 ```html
 <form th:action="@{/register}" th:object="${form}" method="post">
-  <input th:field="*{username}" />
-  <input th:field="*{password}" type="password" />
-  <button type="submit">OK</button>
+   <input th:field="*{username}" />
+   <input th:field="*{password}" type="password" />
+   <button type="submit">OK</button>
 </form>
 ```
 
@@ -181,7 +181,7 @@ cheat-sheet THymeleat/ Spring Boot
 
 ```html
 <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-  Erreur username
+   Erreur username
 </div>
 ```
 
@@ -191,7 +191,7 @@ cheat-sheet THymeleat/ Spring Boot
 ```html
 <!-- templates/fragments/layout.html -->
 <header th:fragment="siteHeader">
-  <h1>Mon App</h1>
+   <h1>Mon App</h1>
 </header>
 ```
 
@@ -207,7 +207,7 @@ cheat-sheet THymeleat/ Spring Boot
 
 ```html
 <ul>
-  <li th:each="p : ${persons}" th:text="${p.name}">Nom</li>
+   <li th:each="p : ${persons}" th:text="${p.name}">Nom</li>
 </ul>
 ```
 
@@ -225,6 +225,19 @@ cheat-sheet THymeleat/ Spring Boot
 
 7. Controleur coté serveur :
 
-```
+```java
+@GetMapping("/register")
+public String show(Model model){
+  model.addAttribute("form", new RegistrationForm());
+  return "register";
+}
+
+@PostMapping("/register")
+public String submit(@Valid @ModelAttribute("form") RegistrationForm form,
+                     BindingResult errors){
+  if (errors.hasErrors()) return "register";
+  // ... save
+  return "redirect:/login?registered";
+}
 
 ```
