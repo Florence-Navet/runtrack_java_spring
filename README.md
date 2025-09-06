@@ -127,15 +127,16 @@ comportement de JPA/Hibernate qui se base sur la clé primaire (@Id) de l’enti
 **Si l’entité a déjà un ID correspondant à une ligne existante en base:**
 
 <<<<<<< HEAD
-    save() effectue un UPDATE → la ligne est modifiée avec les nouvelles valeurs.
+save() effectue un UPDATE → la ligne est modifiée avec les nouvelles valeurs.
 =======
-**Comment stocker en toute sécurité les mots de passe des utilisateurs avec Spring Security?**  
+**Comment stocker en toute sécurité les mots de passe des utilisateurs avec Spring Security?**
 
 Avec Spring Security, on stocke les mots de passe hachés et salés grâce à un PasswordEncoder comme BCryptPasswordEncoder, ou Argon2PasswordEncoder (plus récent, résistant aux attaques GPU/ASIC).  
-Il ne faut pas stocker les mots-de-passes en clair; et mieux vaut eviter les cryptages MD5, SHA-1, ou SHA-256 seuls.    
-On encode au moment de l’inscription et on utilise matches() pour vérifier lors de la connexion, via:    
-passwordEncoder.matches(rawPassword, hashedPassword).  
->>>>>>> 7c9e61c43d65a1d92d9c325ebf967d7a72242a19
+Il ne faut pas stocker les mots-de-passes en clair; et mieux vaut eviter les cryptages MD5, SHA-1, ou SHA-256 seuls.  
+On encode au moment de l’inscription et on utilise matches() pour vérifier lors de la connexion, via:  
+passwordEncoder.matches(rawPassword, hashedPassword).
+
+> > > > > > > 7c9e61c43d65a1d92d9c325ebf967d7a72242a19
 
 ---
 
@@ -177,9 +178,9 @@ cheat-sheet THymeleat/ Spring Boot
 
 ```html
 <form th:action="@{/register}" th:object="${form}" method="post">
-   <input th:field="*{username}" />
-   <input th:field="*{password}" type="password" />
-   <button type="submit">OK</button>
+  <input th:field="*{username}" />
+  <input th:field="*{password}" type="password" />
+  <button type="submit">OK</button>
 </form>
 ```
 
@@ -190,7 +191,7 @@ cheat-sheet THymeleat/ Spring Boot
 
 ```html
 <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-   Erreur username
+  Erreur username
 </div>
 ```
 
@@ -200,7 +201,7 @@ cheat-sheet THymeleat/ Spring Boot
 ```html
 <!-- templates/fragments/layout.html -->
 <header th:fragment="siteHeader">
-   <h1>Mon App</h1>
+  <h1>Mon App</h1>
 </header>
 ```
 
@@ -216,7 +217,7 @@ cheat-sheet THymeleat/ Spring Boot
 
 ```html
 <ul>
-   <li th:each="p : ${persons}" th:text="${p.name}">Nom</li>
+  <li th:each="p : ${persons}" th:text="${p.name}">Nom</li>
 </ul>
 ```
 
@@ -250,3 +251,8 @@ public String submit(@Valid @ModelAttribute("form") RegistrationForm form,
 }
 
 ```
+
+---
+
+**Comment liez-vous une liste d'objets à une vue Thymeleaf ?**  
+
