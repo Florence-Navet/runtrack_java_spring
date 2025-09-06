@@ -257,3 +257,10 @@ public String submit(@Valid @ModelAttribute("form") RegistrationForm form,
 **Comment liez-vous une liste d'objets à une vue Thymeleaf ?**
 
 On lie une liste d’objets en l’ajoutant au modèle dans le contrôleur (`model.addAttribute("persons", liste);`), puis on l’affiche dans la vue avec Thymeleaf en utilisant `th:each` (`<tr th:each="p : ${persons}">`).
+
+**Comment liez-vous un objet à un formulaire Thymeleaf ?**
+
+On lie un objet à un formulaire Thymeleaf avec `th:object` pour lier l'objet et `th:field="{propriété}"` pour chaque champ du formulaire.
+
+**Comment Thymeleaf gère-t-il les messages d'erreur de validation ?**  
+Thymeleaf affiche les messages d'erreur de validation grâce à l'objet `BindingResult` lié au formulaire, avec les attributs ``th:errors` et `#fields.hasErrors(...)` pour montrer les messages définis par les annotations (@Not)
