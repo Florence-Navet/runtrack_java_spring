@@ -4,13 +4,26 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "T'es obligé de mettre ton nom !!")
+    @Size(min = 2, max = 50, message = "T'as intéret de mettre entre 2 et 50 caractères !")
     private String name;
+
+    @NotNull(message = "Obligé l'age, même si tu veux pas !!")
+    @Min(value = 0, message = "Age >= 0. On prend pas les bébés.")
+    @Max(value = 150, message ="Age <=  150. C'est pas prévu pour les dinosaures !!")
     private Integer age;
 
 

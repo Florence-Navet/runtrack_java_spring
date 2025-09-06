@@ -38,7 +38,10 @@ public class SecurityConfig {
                         .requestMatchers("/", "/hello","/login", "/view", "/register").permitAll()
 
                         //autoriser affichage liste personnes
-                        .requestMatchers(HttpMethod.GET, "/persons").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/persons", "persons/add").permitAll()
+
+                        //autoriser person ajouter
+                        .requestMatchers(HttpMethod.POST, "/persons").permitAll()
 
                         //creation des deux roles USER ou ADMIN
                         .requestMatchers(HttpMethod.POST, "/view").hasAnyRole("USER", "ADMIN")
