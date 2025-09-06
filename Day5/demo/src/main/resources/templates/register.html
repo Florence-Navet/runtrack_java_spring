@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Inscription</title></head>
+<body>
+<h1>Créer un compte</h1>
+
+<form th:action="@{/register}" th:object="${form}" method="post">
+    <div>
+        <label>Nom d'utilisateur</label>
+        <input th:field="*{username}" placeholder="username">
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    </div>
+
+    <div>
+        <label>Mot de passe</label>
+        <input th:field="*{password}" type="password" placeholder="mot de passe">
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+
+    <div>
+        <label>Confirmer le mot de passe</label>
+        <input th:field="*{confirmPassword}" type="password" placeholder="confirmation">
+        <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+    </div>
+
+    <!-- CSRF -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <button type="submit">S'inscrire</button>
+</form>
+
+<p th:text="${msg}"></p>
+<p><a th:href="@{/login}">Déjà un compte ? Se connecter</a></p>
+</body>
+</html>

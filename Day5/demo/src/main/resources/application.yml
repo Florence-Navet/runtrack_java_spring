@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: demo
+  profiles:
+    active: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+greeting:
+  message: "Hello World test  le retour omg je meurs DEV"
+  tools: "Hello Tools vous êtes les meilleurs depuis Dev"
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+greeting:
+  message: "Hello World from PROD"
+  tools: "Hello Tools depuis PROD"
