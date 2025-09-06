@@ -256,4 +256,4 @@ public String submit(@Valid @ModelAttribute("form") RegistrationForm form,
 
 **Comment liez-vous une liste d'objets à une vue Thymeleaf ?**
 
-On lie une liste d’objets en l’ajoutant au modèle dans le contrôleur (model.addAttribute("persons", liste);), puis on l’affiche dans la vue avec Thymeleaf en utilisant th:each (<tr th:each="p : ${persons}">).
+On lie une liste d’objets en l’ajoutant au modèle dans le contrôleur (`model.addAttribute("persons", liste);`), puis on l’affiche dans la vue avec Thymeleaf en utilisant `th:each` (`<tr th:each="p : ${persons}">`).
