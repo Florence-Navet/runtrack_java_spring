@@ -270,3 +270,9 @@ Thymeleaf affiche les messages d'erreur de validation grâce à l'objet `Binding
 1. Ajouter dans la balise login du `html`, `xmlns:sec="https://www.thymeleaf.org/extras/spring-security"` puis
 2. utiliser : `<span sec:authentication="name"></span>` ou `<span sec:authentication="principal.username"></span>`
 3. et rajouter la balise `<div th:replace="~{fragments/header :: appHeader}"></div>` dans toutes les pages où vous voulez avoir la personnalisation.
+
+**Dans quels scénarios Spring Web Flow est-il particulièrement utile ?**  
+Spring Web Flow est particulièrement utilise pour gérer des _processus multi-étapes_ (wizard, tunnel de commande, inscription complexe) où il faut :  
+. conserver l'état entre les étapes,  
+. contrôler finement la navigation,  
+. valider les données étape par étape.
