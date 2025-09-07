@@ -263,4 +263,10 @@ On lie une liste d’objets en l’ajoutant au modèle dans le contrôleur (`mod
 On lie un objet à un formulaire Thymeleaf avec `th:object` pour lier l'objet et `th:field="{propriété}"` pour chaque champ du formulaire.
 
 **Comment Thymeleaf gère-t-il les messages d'erreur de validation ?**  
-Thymeleaf affiche les messages d'erreur de validation grâce à l'objet `BindingResult` lié au formulaire, avec les attributs ``th:errors` et `#fields.hasErrors(...)` pour montrer les messages définis par les annotations (@Not)
+Thymeleaf affiche les messages d'erreur de validation grâce à l'objet `BindingResult` lié au formulaire, avec les attributs ``th:errors` et `#fields.hasErrors(...)` pour montrer les messages définis par les annotations (`@NotNull`, `@Siz`, etc,)
+
+**Comment pouvez-vous accéder à l'utilisateur actuellement connecté dans une vue Thymeleaf ?**
+
+1. Ajouter dans la balise login du `html`, `xmlns:sec="https://www.thymeleaf.org/extras/spring-security"` puis
+2. utiliser : `<span sec:authentication="name"></span>` ou `<span sec:authentication="principal.username"></span>`
+3. et rajouter la balise `<div th:replace="~{fragments/header :: appHeader}"></div>` dans toutes les pages où vous voulez avoir la personnalisation.
