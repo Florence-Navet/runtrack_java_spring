@@ -1,24 +1,18 @@
 package com.example.demo.config;
 
 import com.example.demo.repository.AppUserRepository;
-
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-//import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-
 
 @Configuration
 @EnableWebSecurity
@@ -28,59 +22,49 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Autorisations
                 .authorizeHttpRequests(auth -> auth
-                        // ressources statiques / H2
+                        // ressources statiques & H2
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
 
                         // pages publiques
-                        .requestMatchers("/", "/hello","/login", "/view", "/register").permitAll()
+                        .requestMatchers("/", "/hello", "/login", "/view", "/register").permitAll()
 
-                        //autoriser affichage liste personnes
-                        .requestMatchers(HttpMethod.GET, "/persons", "persons/add").permitAll()
+                        // >>> Web Flow
+                        .requestMatchers("/purchase/**").permitAll()
 
-                        //autoriser person ajouter
+                        // Person
+                        .requestMatchers(HttpMethod.GET, "/persons", "/persons/add").permitAll()
                         .requestMatchers(HttpMethod.POST, "/persons").permitAll()
 
-                        //creation des deux roles USER ou ADMIN
+                        // rôles
                         .requestMatchers(HttpMethod.POST, "/view").hasAnyRole("USER", "ADMIN")
-
-                        //action reservé à l'admin
-                        .requestMatchers(HttpMethod.POST,"/view/*/update").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/view/*/delete").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/view/*/update").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/view/*/delete").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
                         // le reste nécessite une auth
                         .anyRequest().authenticated()
                 )
-                // Form login personnalisé
-                .formLogin(form  -> form
-                        .loginPage("/login") //GET : page de login
-                        .loginProcessingUrl("/login") //POST : action du login
-                        .defaultSuccessUrl("/view",  true)// redirection après succès
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/view", true)
                         .failureUrl("/login?error")
-                        .permitAll()//
+                        .permitAll()
                 )
-                .requestCache(rc -> rc.disable())
-
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
-                        .permitAll())
-
-                // H2 console : CSRF ignoré + iframes autorisés
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**")
+                        .permitAll()
                 )
-                // H2 a besoin d'iframes
+                .requestCache(rc -> rc.disable())
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
         return http.build();
     }
 
-
-//version BDD
     @Bean
     UserDetailsService userDetailsService(AppUserRepository repo) {
         return username -> repo.findByUsername(username)
@@ -88,11 +72,9 @@ public class SecurityConfig {
                         .withUsername(user.getUsername())
                         .password(user.getPassword())
                         .authorities(user.getRoles().toArray(new String[0]))
-                        .build()
-                )
+                        .build())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
-
 
     @Bean
     PasswordEncoder passwordEncoder() {
