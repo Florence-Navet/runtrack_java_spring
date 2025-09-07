@@ -9,6 +9,10 @@
     </style>
 </head>
 <body>
+<!-- Inclusion du header -->
+<div th:replace="~{fragments/header :: appHeader}"></div>
+
+
 <h1>Ajouter une nouvelle personne</h1>
 
 <form th:action="@{/persons}" th:object="${person}" method="post">
